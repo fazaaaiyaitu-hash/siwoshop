@@ -1,4 +1,4 @@
-import { db, productsCollection } from './firebase-config.js';
+import { db, productsCollection } from 'firebase-config.js';
 import { getDocs, query, where, orderBy, limit, startAfter, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // State Management
