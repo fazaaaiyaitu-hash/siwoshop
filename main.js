@@ -21,22 +21,28 @@ let cartOverlay;
 let toast;
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     productContainer = document.getElementById('productContainer');
     loadingOverlay = document.getElementById('loadingOverlay');
     cartSidebar = document.getElementById('cartSidebar');
     cartOverlay = document.getElementById('cartOverlay');
     toast = document.getElementById('toastNotification');
     
-    // Hide loading after 1s
-    setTimeout(() => {
+    console.log("🟡 Memulai loading produk...");
+    
+    // TUNGGU data selesai load
+    await loadProducts();
+    
+    console.log("✅ Produk selesai dimuat");
+    
+    // Sembunyikan loading setelah data selesai
+    if (loadingOverlay) {
         loadingOverlay.style.opacity = '0';
         setTimeout(() => {
-            loadingOverlay.style.display = 'none';
+            if (loadingOverlay) loadingOverlay.style.display = 'none';
         }, 500);
-    }, 1000);
+    }
     
-    loadProducts();
     setupEventListeners();
     updateCartUI();
 });
@@ -45,14 +51,17 @@ async function loadProducts(reset = true) {
     if (isLoading) return;
     isLoading = true;
     
+    console.log("🟡 loadProducts dipanggil, reset:", reset);
+    
     if (reset) {
         lastDoc = null;
         hasMore = true;
         allProducts = [];
-        productContainer.innerHTML = '';
+        if (productContainer) productContainer.innerHTML = '';
     }
     
     try {
+        console.log("🟡 Mengambil data dari Firebase...");
         let q = query(productsCollection, limit(12));
         
         if (currentCategory) {
@@ -64,8 +73,10 @@ async function loadProducts(reset = true) {
         }
         
         const querySnapshot = await getDocs(q);
+        console.log("✅ Data diterima, jumlah:", querySnapshot.size);
         
         if (querySnapshot.empty) {
+            console.log("⚠️ TIDAK ADA PRODUK! Buat collection 'products' di Firebase Console");
             hasMore = false;
         } else {
             lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
@@ -76,8 +87,17 @@ async function loadProducts(reset = true) {
         
         applyFiltersAndSort();
     } catch (error) {
-        console.error('Error loading products:', error);
-        showToast('Failed to load products', 'error');
+        console.error('❌ Error detail:', error);
+        console.error('❌ Pesan error:', error.message);
+        showToast('Failed to load products: ' + error.message, 'error');
+        
+        // Tetap sembunyikan loading meskipun error
+        if (loadingOverlay) {
+            loadingOverlay.style.opacity = '0';
+            setTimeout(() => {
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+            }, 500);
+        }
     } finally {
         isLoading = false;
     }
@@ -125,6 +145,7 @@ function displayProducts() {
                 <i class="fas fa-box-open"></i>
                 <h3>No products found</h3>
                 <p>Try adjusting your filters or search term</p>
+                <button onclick="location.reload()" class="btn-secondary" style="margin-top: 1rem;">Refresh</button>
             </div>
         `;
         return;
@@ -271,6 +292,7 @@ function removeFromCart(id) {
 }
 
 function showToast(message, type = 'success') {
+    if (!toast) return;
     toast.textContent = message;
     toast.className = `toast ${type} show`;
     setTimeout(() => {
