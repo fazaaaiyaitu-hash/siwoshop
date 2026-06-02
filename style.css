@@ -746,4 +746,10 @@ body {
     
     .filter-bar {
         flex-direction: column;
-        gap
+        gap: 1rem;
+    }
+    
+    .product-grid-view {
+        grid-template-columns: 1fr;
+    }
+}
