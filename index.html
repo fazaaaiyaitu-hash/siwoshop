@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Toko Online</h1>
+        
+        <!-- Filter Kategori -->
+        <div class="filter">
+            <label>Filter Kategori:</label>
+            <select id="categoryFilter">
+                <option value="">Semua</option>
+                <option value="Elektronik">Elektronik</option>
+                <option value="Pakaian">Pakaian</option>
+                <option value="Makanan">Makanan</option>
+            </select>
+        </div>
+
+        <!-- Daftar Produk -->
+        <div id="productList" class="product-grid"></div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

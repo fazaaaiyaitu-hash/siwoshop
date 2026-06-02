@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel - Manajemen Produk</h1>
+        
+        <!-- Form Tambah/Edit Produk -->
+        <div class="admin-form">
+            <h2>Tambah/Edit Produk</h2>
+            <input type="hidden" id="productId">
+            <input type="text" id="productName" placeholder="Nama Produk" required>
+            <input type="number" id="productPrice" placeholder="Harga" required>
+            <select id="productCategory" required>
+                <option value="">Pilih Kategori</option>
+                <option value="Elektronik">Elektronik</option>
+                <option value="Pakaian">Pakaian</option>
+                <option value="Makanan">Makanan</option>
+            </select>
+            <input type="text" id="productImage" placeholder="URL Gambar" required>
+            <button id="saveBtn">Simpan Produk</button>
+            <button id="cancelBtn" style="display:none;">Batal</button>
+        </div>
+
+        <!-- Daftar Produk untuk Admin -->
+        <h2>Daftar Produk</h2>
+        <div id="adminProductList"></div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
