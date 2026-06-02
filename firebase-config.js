@@ -4,12 +4,12 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-s
 
 // 🔥 GANTI DENGAN KONFIGURASI FIREBASE KAMU 🔥
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBvjdO78HslTn9RHM4-tLsdQbJyKsSsxJk",
+  authDomain: "website-5fe39.firebaseapp.com",
+  projectId: "website-5fe39",
+  storageBucket: "website-5fe39.firebasestorage.app",
+  messagingSenderId: "243807840965",
+  appId: "1:243807840965:web:a1652b48f92eb5043d1eac"
 };
 
 // Initialize Firebase
