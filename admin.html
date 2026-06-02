@@ -3,35 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NovaMart Admin | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Admin Panel - Manajemen Produk</h1>
-        
-        <!-- Form Tambah/Edit Produk -->
-        <div class="admin-form">
-            <h2>Tambah/Edit Produk</h2>
-            <input type="hidden" id="productId">
-            <input type="text" id="productName" placeholder="Nama Produk" required>
-            <input type="number" id="productPrice" placeholder="Harga" required>
-            <select id="productCategory" required>
-                <option value="">Pilih Kategori</option>
-                <option value="Elektronik">Elektronik</option>
-                <option value="Pakaian">Pakaian</option>
-                <option value="Makanan">Makanan</option>
-            </select>
-            <input type="text" id="productImage" placeholder="URL Gambar" required>
-            <button id="saveBtn">Simpan Produk</button>
-            <button id="cancelBtn" style="display:none;">Batal</button>
-        </div>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-crown"></i>
+                    <span>Nova<span>Admin</span></span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="products">
+                    <i class="fas fa-boxes"></i>
+                    <span>Products</span>
+                </a>
+                <a href="#" class="nav-item" data-page="orders">
+                    <i class="fas fa-truck"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
 
-        <!-- Daftar Produk untuk Admin -->
-        <h2>Daftar Produk</h2>
-        <div id="adminProductList"></div>
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <button id="toggleSidebar" class="toggle-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="admin-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search products, orders...">
+                </div>
+                <div class="admin-profile">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="profile-info">
+                        <img src="https://ui-avatars.com/api/?background=6366f1&color=fff&name=Admin" alt="Admin">
+                        <span>Admin User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalProducts">0</h3>
+                            <p>Total Products</p>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 12%
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalOrders">0</h3>
+                            <p>Total Orders</p>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 8%
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalCustomers">0</h3>
+                            <p>Customers</p>
+                        </div>
+                        <div class="stat-change negative">
+                            <i class="fas fa-arrow-down"></i> 3%
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalRevenue">Rp 0</h3>
+                            <p>Revenue</p>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 23%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-section">
+                    <div class="recent-header">
+                        <h3>Recent Products</h3>
+                        <a href="#" data-page="products" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div id="recentProducts" class="recent-products-table"></div>
+                </div>
+            </div>
+
+            <!-- Products Management Page -->
+            <div id="productsPage" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-boxes"></i> Product Management</h2>
+                    <button id="addProductBtn" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add New Product
+                    </button>
+                </div>
+
+                <!-- Product Form Modal -->
+                <div id="productModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modalTitle">Add New Product</h3>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <form id="productForm">
+                            <input type="hidden" id="productId">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" id="productName" class="form-input" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Price (Rp)</label>
+                                    <input type="number" id="productPrice" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select id="productCategory" class="form-input" required>
+                                        <option value="">Select category</option>
+                                        <option value="Elektronik">Electronics</option>
+                                        <option value="Pakaian">Fashion</option>
+                                        <option value="Makanan">Food & Beverage</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Image URL</label>
+                                <input type="url" id="productImage" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Quantity</label>
+                                <input type="number" id="productStock" class="form-input" value="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="productDescription" class="form-input" rows="3" placeholder="Product description..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Product</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Products Table -->
+                <div class="products-table-container">
+                    <div class="table-toolbar">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="productSearch" placeholder="Search products...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="categoryFilterAdmin">
+                                <option value="">All Categories</option>
+                                <option value="Elektronik">Electronics</option>
+                                <option value="Pakaian">Fashion</option>
+                                <option value="Makanan">Food & Beverage</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <script type="module" src="admin.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/admin.js"></script>
 </body>
 </html>
